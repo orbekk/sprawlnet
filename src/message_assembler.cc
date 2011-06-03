@@ -18,6 +18,7 @@
 #include <iostream>
 
 #include "connection.h"
+#include "message_buffer.h"
 #include "message_assembler.h"
 #include "message_parser.h"
 
@@ -118,7 +119,8 @@ void MessageAssembler::assemble_partial(const Connection &connection,
     partial->bytes_received += bytes_to_copy;
 
     if (partial->bytes_received == partial->message_size) {
-        parser->parse(partial->buffer, partial->message_size);
+        MessageBuffer message(partial->buffer, partial->message_size);
+        parser->parse(message);
         partial_messages.erase(connection.get_fd());
         assemble(connection, buffer + bytes_to_copy, buffer_size - bytes_to_copy);
     }

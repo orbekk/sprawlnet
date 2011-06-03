@@ -26,7 +26,7 @@ MessageBuffer::MessageBuffer(const char *buffer, uint16_t length) {
     set(buffer, length);
 }
 
-void MessageBuffer::copy_to(MessageBuffer *dest) {
+void MessageBuffer::copy_to(MessageBuffer *dest) const {
     dest->set(buffer.get(), length);
 }
 

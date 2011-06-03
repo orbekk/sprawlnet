@@ -17,6 +17,7 @@
 
 #include <iostream>
 
+#include "message_buffer.h"
 #include "message_parser.h"
 
 using std::cout;
@@ -24,10 +25,10 @@ using std::endl;
 
 namespace sprawlnet {
 
-void MessageParser::parse(const char *message, size_t message_size) {
-    char *message_ = new char[message_size + 1];
-    memcpy(message_, message, message_size);
-    message_[message_size] = '\0';
+void MessageParser::parse(const MessageBuffer &message) {
+    char *message_ = new char[message.get_length() + 1];
+    memcpy(message_, message.get_buffer(), message.get_length());
+    message_[message.get_length()] = '\0';
 
     cout << "Parsing message: " << message_ << endl;
     delete message_;

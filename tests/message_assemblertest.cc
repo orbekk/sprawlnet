@@ -23,6 +23,7 @@
 
 #include "connection.h"
 #include "message_assembler.h"
+#include "message_buffer.h"
 #include "message_parser_interface.h"
 
 using std::cout;
@@ -50,10 +51,10 @@ public:
 
     TestMessageParser() : message(NULL), message_length(0) {}
 
-    void parse(const char *buffer, size_t buffer_size) {
-        message = new char[buffer_size];
-        memcpy(message, buffer, buffer_size);
-        message_length = buffer_size;
+    void parse(const MessageBuffer &message) {
+        this->message = new char[message.get_length()];
+        memcpy(this->message, message.get_buffer(), message.get_length());
+        message_length = message.get_length();
     }
 };
 
@@ -74,11 +75,11 @@ public:
 
 class MessageAssemblerTest : public ::testing::Test {
 public:
-        Connection connection;
-        TestMessageParser parser;
-        TestMessageAssembler assembler;
+    Connection connection;
+    TestMessageParser parser;
+    TestMessageAssembler assembler;
 
-        MessageAssemblerTest() : connection(1), assembler(&parser) {}
+    MessageAssemblerTest() : connection(1), assembler(&parser) {}
 };
 
 TEST_F(MessageAssemblerTest, close_connection) {

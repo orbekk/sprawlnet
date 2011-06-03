@@ -26,9 +26,9 @@ public:
     MessageBuffer() : buffer(NULL), length(0) {}
     MessageBuffer(const char* buffer, uint16_t length);
     virtual ~MessageBuffer() {};
-    void copy_to(MessageBuffer *dest);
-    const char* get_buffer() { return buffer.get(); }
-    uint16_t get_length() { return length; }
+    void copy_to(MessageBuffer *dest) const;
+    const char* get_buffer() const { return buffer.get(); }
+    uint16_t get_length() const { return length; }
 
 protected:
     virtual void set(const char* buffer, uint16_t length);
